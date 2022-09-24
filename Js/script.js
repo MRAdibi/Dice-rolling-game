@@ -22,7 +22,7 @@ let acticePlayer = name1
 
 // I created a function to set the dice img
 const setImg = function (number) {
-    img.src = `dice-${number}.png`
+    img.src = `Img/dice-${number}.png`
 }
 
 // calculate the current currentScore
