@@ -9,10 +9,8 @@ maybe rewrite server in python but javascript is better in async
 
 ```bash
 cd server
-virtualenv env
-source ./env/bin/activate
-pip install -r requirements.txt
-python main.py
+npm install # to install dependencies
+npm start
 ```
 
 ## play the game !
