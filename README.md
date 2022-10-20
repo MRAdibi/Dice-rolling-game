@@ -1,6 +1,9 @@
 # Dice-rolling-game
 
-A simpe game created using Javascript & Python
+A simpe game created using Javascript
+
+TODO:
+maybe rewrite server in python but javascript is better in async
 
 ## start server
 
