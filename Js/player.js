@@ -1,6 +1,7 @@
 class Player {
-  constructor(root_element) {
+  constructor(root_element, player_name) {
     this.root_element = root_element;
+    this.player_name = player_name;
 
     this.scoreElement = this.root_element.querySelector("#score");
     this.currentScoreElement = this.root_element.querySelector("#current");
@@ -15,21 +16,16 @@ class Player {
   setScore(n) {
     this.score = n;
     this.scoreElement.textContent = n;
+    checkWinner();
 
-    socket.send(
-      JSON.stringify({
-        type: "update_score",
-      })
-    );
+    socket.emit("update score", { score: n });
   }
 
   setCurrentScore(n) {
     this.currentScore = n;
     this.currentScoreElement.textContent = n;
-    socket.send(
-      JSON.stringify({
-        type: "update_current_score",
-      })
-    );
+    checkWinner();
+
+    socket.emit("update current score", { score: n });
   }
 }
