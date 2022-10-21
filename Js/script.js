@@ -22,52 +22,15 @@ let online = true;
 
 // } end of main variables
 
-// connecting client socket to the websocket server
-let socket = io("http://localhost:8000", {
-  transports: ["websocket", "polling", "flashsocket"],
-});
-
-socket.on("deter player", (msg) => {
-  if (msg == "player1") {
-    clientPlayer = player_1;
-  } else {
-    clientPlayer = player_2;
-  }
-});
-
-socket.on("update score", (msg) => {
-  activePlayer.score = msg.score;
-  activePlayer.scoreElement.textContent = msg.score;
-});
-
-socket.on("update current score", (msg) => {
-  console.log("f");
-  activePlayer.currentScore = msg.score;
-  activePlayer.currentScoreElement.textContent = msg.score;
-});
-
-socket.on("roll dice", (value) => {
-  setImg(value);
-});
-
-socket.on("switch player", (msg) => {
-  console.log(msg);
-  if (msg == "player1") {
-    activePlayer = player_1;
-  } else {
-    activePlayer = player_2;
-  }
-  player_1.root_element.classList.toggle("player--active");
-  player_2.root_element.classList.toggle("player--active");
-});
-
 // image setter function based on dice number
 const setImg = (number) => {
   img.src = `Img/dice-${number}.png`;
 };
 
-// change style whene a player loss his acticePlayer
+// switch active player
 const switchPlayer = () => {
+  activePlayer.setCurrentScore(0);
+
   player_1.root_element.classList.toggle("player--active");
   player_2.root_element.classList.toggle("player--active");
 
@@ -78,29 +41,15 @@ const switchPlayer = () => {
   socket.emit("switch player", activePlayer.player_name);
 };
 
-// check the winner
-const checkWinner = () => {
-  if (player_1.score >= 100) {
-    player_1.root_element.classList.add("player--winner");
-    holdBtn.disabled = true;
-    rollDiceBtn.disabled = true;
-  } else if (player_2.score >= 100) {
-    player_2.root_element.classList.add("player--winner");
-    holdBtn.disabled = true;
-    rollDiceBtn.disabled = true;
-  }
-};
-
 // start of the game events {
 
-// roll dice event (main game system)
+// roll dice event
 rollDiceBtn.addEventListener("click", () => {
-  let generateNumber = Math.trunc(Math.random() * 6) + 1;
+  const generateNumber = Math.trunc(Math.random() * 6) + 1;
   setImg(generateNumber);
   socket.emit("roll dice", generateNumber);
   // switch player if roll dice is 1
   if (generateNumber == 1) {
-    activePlayer.setCurrentScore(0);
     switchPlayer();
   } else {
     activePlayer.setCurrentScore(activePlayer.currentScore + generateNumber);
@@ -110,7 +59,6 @@ rollDiceBtn.addEventListener("click", () => {
 // holding the score event
 holdBtn.addEventListener("click", () => {
   activePlayer.setScore(activePlayer.currentScore + activePlayer.score);
-  activePlayer.setCurrentScore(0);
   switchPlayer();
 });
 

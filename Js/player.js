@@ -16,7 +16,13 @@ class Player {
   setScore(n) {
     this.score = n;
     this.scoreElement.textContent = n;
-    checkWinner();
+
+    // check winner
+    if (activePlayer.score >= 100) {
+      activePlayer.root_element.classList.add("player--winner");
+      holdBtn.disabled = true;
+      rollDiceBtn.disabled = true;
+    }
 
     socket.emit("update score", { score: n });
   }
@@ -24,7 +30,6 @@ class Player {
   setCurrentScore(n) {
     this.currentScore = n;
     this.currentScoreElement.textContent = n;
-    checkWinner();
 
     socket.emit("update current score", { score: n });
   }
