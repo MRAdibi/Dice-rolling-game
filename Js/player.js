@@ -13,7 +13,7 @@ class Player {
     this.currentScore = 0;
   }
 
-  setScore(n) {
+  setScore(n, broadcast) {
     this.score = n;
     this.scoreElement.textContent = n;
 
@@ -24,13 +24,18 @@ class Player {
       rollDiceBtn.disabled = true;
     }
 
-    socket.emit("update score", { score: n });
+    if (broadcast)
+      socket.emit("update score", { score: n, player: this.player_name });
   }
 
-  setCurrentScore(n) {
+  setCurrentScore(n, broadcast) {
     this.currentScore = n;
     this.currentScoreElement.textContent = n;
 
-    socket.emit("update current score", { score: n });
+    if (broadcast)
+      socket.emit("update current score", {
+        score: n,
+        player: this.player_name,
+      });
   }
 }

@@ -29,7 +29,7 @@ const setImg = (number) => {
 
 // switch active player
 const switchPlayer = () => {
-  activePlayer.setCurrentScore(0);
+  activePlayer.setCurrentScore(0, true);
 
   player_1.root_element.classList.toggle("player--active");
   player_2.root_element.classList.toggle("player--active");
@@ -52,23 +52,26 @@ rollDiceBtn.addEventListener("click", () => {
   if (generateNumber == 1) {
     switchPlayer();
   } else {
-    activePlayer.setCurrentScore(activePlayer.currentScore + generateNumber);
+    activePlayer.setCurrentScore(
+      activePlayer.currentScore + generateNumber,
+      true
+    );
   }
 });
 
 // holding the score event
 holdBtn.addEventListener("click", () => {
-  activePlayer.setScore(activePlayer.currentScore + activePlayer.score);
+  activePlayer.setScore(activePlayer.currentScore + activePlayer.score, true);
   switchPlayer();
 });
 
 // Restarting the game event
 nameGameBtn.addEventListener("click", () => {
-  player_1.setScore(0);
-  player_1.setCurrentScore(0);
+  player_1.setScore(0, true);
+  player_1.setCurrentScore(0, true);
 
-  player_2.setScore(0);
-  player_2.setCurrentScore(0);
+  player_2.setScore(0, true);
+  player_2.setCurrentScore(0, true);
 
   img.src = "";
 

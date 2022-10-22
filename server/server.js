@@ -10,13 +10,33 @@ let players = {
   player_2: false,
 };
 
+let gameState = {
+  player_1: {
+    name: "player_1",
+    currentScore: 0,
+    score: 0,
+  },
+  player_2: {
+    name: "player_2",
+    currentScore: 0,
+    score: 0,
+  },
+};
+
+let activePlayer = gameState.player_1;
+
+const getPlayer = (name) => {
+  if (name == "player1" || name == "player_1") return gameState.player_1;
+  else if (name == "player2" || name == "player_2") return gameState.player_2;
+};
+
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
 io.on("connection", (socket) => {
   console.log("a user connected");
-
+  socket.emit("init game state", gameState, activePlayer);
   if (!players.player_1 && !players.player_2) {
     socket.emit("deter player", "player1");
   } else {
@@ -24,14 +44,21 @@ io.on("connection", (socket) => {
   }
 
   socket.on("update score", (e) => {
+    getPlayer(e.player).score = e.score;
     socket.broadcast.emit("update score", e);
   });
   socket.on("update current score", (e) => {
+    getPlayer(e.player).currentScore = e.score;
+
     socket.broadcast.emit("update current score", e);
   });
 
   socket.on("switch player", (e) => {
     console.log("s");
+    activePlayer == gameState.player_1
+      ? (activePlayer = gameState.player_2)
+      : (activePlayer = gameState.player_1);
+
     socket.broadcast.emit("switch player", e);
   });
 
