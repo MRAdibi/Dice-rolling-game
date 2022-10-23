@@ -9,8 +9,8 @@ create another branch called python-server and rewrite server with python socket
 
 ```bash
 cd server
-pip install -r requerements.txt # to install dependencies
-python main.py
+npm install # to install dependencies
+npm start
 ```
 
 ## play the game !
