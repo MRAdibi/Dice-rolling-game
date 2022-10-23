@@ -15,4 +15,4 @@ npm start
 
 ## play the game !
 
-open index.html and play! :)
+open index.html and play!
