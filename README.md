@@ -3,7 +3,7 @@
 A simpe game created using Javascript
 
 TODO:
-maybe rewrite server in python but javascript is better in async
+create another branch called python-server and rewrite server with python socketio server
 
 ## start server
 
@@ -15,4 +15,4 @@ npm start
 
 ## play the game !
 
-open index.html and play! :)
+open index.html and play!
