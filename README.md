@@ -2,8 +2,8 @@
 
 A simpe game created using Javascript
 
-TODO:
-create another branch called python-server and rewrite server with python socketio server
+## To-do
+- [ ] create another branch called python-server and rewrite server with python socketio server
 
 ## start server
 
