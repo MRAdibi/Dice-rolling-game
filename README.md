@@ -2,8 +2,6 @@
 
 A simpe game created using Javascript
 
-## To-do
-- [ ] create another branch called python-server and rewrite server with python socketio server
 
 ## start server
 
